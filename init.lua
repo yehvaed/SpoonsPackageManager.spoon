@@ -49,13 +49,13 @@ end
 obj.middlewares = {
     -- middleware for spoons in github reposittory (ex. in Spoons directory)
     function(id, props)
-        if not isSpoonInstalled() and bool(props.repo) then
-            local _, name = split(id, "/")
+        local _, name = split(id, "/")
+        if not isSpoonInstalled(name) and bool(props.repo) then
             local url = ("https://raw.githubusercontent.com/%s/master/%s.spoon.zip"):format(props.repo, id)
 
-            hs.execute("/usr/bin/curl -O -L " .. url)
-            hs.execute("/usr/bin/unzip -o ".. name .. ".spoon.zip -d Spoons/")
-            hs.execute("/usr/bin/rm ".. name .. ".spoon.zip")
+            hs.execute("curl -O -L " .. url)
+            hs.execute("unzip -o ".. name .. ".spoon.zip -d Spoons/")
+            hs.execute("rm ".. name .. ".spoon.zip")
         end
     end,
     -- middleware to to create loading function
